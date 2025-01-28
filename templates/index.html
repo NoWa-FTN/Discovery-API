@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="index-container">
+        <h1>Welcome, {{ username }}!</h1>
+        <button id="fetchPostsBtn">Fetch Posts</button>
+        <div id="loader" style="display: none;">Loading...</div>
+        <ul id="postsList"></ul>   
+        <button id="logoutBtn">Logout</button>
+    </div>
+
+    <script>
+        // Sélectionne les éléments
+        const fetchPostsBtn = document.getElementById("fetchPostsBtn");
+        const postsList = document.getElementById("postsList");
+        const loader = document.getElementById("loader");
+            
+        // Appel API pour récupérer les articles
+        fetchPostsBtn.addEventListener("click", async () => {
+            try {
+                loader.style.display = "block"; // Affiche le loader
+                const response = await fetch("/api-posts");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch posts");
+                }
+                const posts = await response.json();
+            
+                postsList.innerHTML = ""; // Réinitialise la liste
+                posts.forEach((post) => {
+                    const li = document.createElement("li");
+                    li.textContent = `${post.title}: ${post.body}`;
+                    postsList.appendChild(li);
+                });
+            } catch (error) {
+                console.error("Error fetching posts:", error);
+                alert("An error occurred while fetching posts.");
+            } finally {
+                loader.style.display = "none"; // Masque le loader après l'appel
+            }
+        });
+
+        // Gestion de la déconnexion
+        logoutBtn.addEventListener("click", async () => {
+            const response = await fetch("/logout", {
+                method: "POST",
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                window.location.href = result.redirect;
+            }
+        });
+    </script>
+</body>
+</html>
