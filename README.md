@@ -1,5 +1,3 @@
-Voici une version corrigée et mieux structurée de ton `README.md` pour qu'il soit clair et facile à suivre.
-
 ---
 
 # Projet Flask API - Page de Connexion et Appel API
@@ -132,4 +130,3 @@ requests==2.28.2
 ## Licence
 
 Ce projet est sous licence MIT. Consultez le fichier `LICENSE` pour plus d'informations.
-```
