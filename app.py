@@ -1,4 +1,4 @@
-import requests  # Import pour les appels API
+import requests  # Import pour les appels API(Application Programming Interfaces)
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 
 app = Flask(__name__)
