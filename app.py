@@ -1,8 +1,9 @@
+import os
 import requests  # Import pour les appels API(Application Programming Interfaces)
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 
 app = Flask(__name__)
-app.secret_key = "***SECRET_SUPPRIME***"  # Clé secrète pour la gestion des sessions
+app.secret_key = os.environ.get("FLASK_SECRET_KEY") or os.urandom(24)  # Clé secrète pour la gestion des sessions
 
 # Utilisateurs fictifs pour la démonstration
 users = {"admin": "password123", "user": "pass456"}
